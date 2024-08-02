@@ -111,7 +111,9 @@ function getMitId(username: string): Array<number> {
 正确的方法是直接使用不可修改的值进行返回, 比如string.
 
 > function getMitId(username: string): **string**
+> 
 > requires: nothing
+> 
 > effects: returns a length-9 string containing the 9-digit MIT identifier of username, or throws NoSuchUser­Error if nobody with username is in MIT’s database.
 >
 
@@ -141,6 +143,7 @@ const myArray: ReadonlyArray<number> = yourArray;
 ### 条理清晰的规范
 
 > function sumFind(a: Array<number>, b: Array<number>, val: number): number
+> 
 > effects: returns the sum of all indices in arrays a and b at which val appears
 
 这并非一个好的函数, 因为它揉杂了两个功能, 即在数组中查找index和sum.
@@ -152,12 +155,14 @@ const myArray: ReadonlyArray<number> = yourArray;
 ### 规范必须严格
 
 > function addAll(arr1: Array<T>, arr2: Array<T>): void
+> 
 > effects: appends the elements from arr2 to arr1 in order, unless it encounters a null element in arr2, at which point it throws a TypeError
 >
 
 这个例子揉杂了effects. 更重要的是它会导致在遇到null之前arr1被修改了. 具体修正如下:
 
 > function addAll(arr1: Array<T>, arr2: Array<T>): void
+> 
 > effects: appends the elements from arr2 to arr1 in order. If arr2 contains null elements, it throws a TypeError and no elements are appended to arr1.
 >
 
