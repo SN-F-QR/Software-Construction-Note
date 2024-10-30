@@ -79,6 +79,24 @@ fetch("https://api.example.com/data")
   });
 ```
 
+### 网页路由(routing)
+
+路由是一种将 URL 路径映射到对应页面内容的机制, 具有以下特点, 实现页面之间的无刷新跳转.
+
+比如使用 Reach Router library 可以实现:
+
+```jsx
+<Router>
+  <Home path="/" />
+  <Dashboard path="dashboard" />
+  <Team path="/team" />
+</Router>
+```
+
+对应 URL `"/" "/dashboard" "/team"`下的不同渲染内容. 其中`dashboard`前没有`/`, 代表相对路径, 直接加在当前 URL 后方, 而带有`/`则为绝对路径, 接在根路径下.
+
+实现跳转功能时, 使用`<Link to="..."></Link>`, 会被渲染为 html 的链接跳转形式.
+
 ## HTML
 
 = Hypertext Markup Language, 用于描述网页的**内容和结构**
@@ -269,6 +287,7 @@ flex 用于横向或纵向组织内容块.
 .u-flex {
   display: flex; /* 还有其它方式, 如block */
   flex-direction: row;
+  align-items: center; /* 实现对齐 */
 }
 
 .u-grow {
