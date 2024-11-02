@@ -79,6 +79,39 @@ fetch("https://api.example.com/data")
   });
 ```
 
+当有**一组 Promise** 时, (比如多个 get), 可以用数组将其整合, 并调用 Promise.race 处理第一个 fulfill/.all 处理所有/.any 处理任意一个成功的.
+
+设计异步操作的变量, 无法直接执行, 可以使用 await 来等待异步函数执行 如:
+
+```js
+const a = slowNumber(10);
+const b = slowNumber(20); // two promises
+
+const c = a + b; // fail!!!!
+
+const a = await slowNumber(10); // spend 5s  注意必须用在异步函数里
+const b = await slowNumber(20); // spend 3s
+
+const c = a + b; // Pass, spend 8s totally
+```
+
+只有异步函数能够使用 await, 用 async 标识, ❌ 不能直接写在 main 函数中:
+
+```js
+const myFunction = async () => {
+  //...
+};
+
+// Rewrite the GET.then() with await
+useEffect(() => {
+  const getStories = async () => {
+    const storyObjs = await get("/api/stories");
+    setStories(storyObjs);
+  };
+  getStories();
+});
+```
+
 ### 网页路由(routing)
 
 路由是一种将 URL 路径映射到对应页面内容的机制, 具有以下特点, 实现页面之间的无刷新跳转.
@@ -279,9 +312,9 @@ body {
 }
 ```
 
-### flex
+### 元素排列方式
 
-flex 用于横向或纵向组织内容块.
+**flex** 用于横向或纵向组织内容块.
 
 ```css
 .u-flex {
@@ -295,3 +328,50 @@ flex 用于横向或纵向组织内容块.
   flex-basis: 0; /* basis需要设置为0使得块的宽度可以被设置为相同 */
 }
 ```
+
+**grid** 用于网格方式排列内容块.
+
+```css
+.container {
+  display: grid;
+  grid-auto-flow: row; /* 如何处理末尾的元素, row为优先增加一行 */
+  grid-template-rows: 100px 100px; /* 设置单元格大小, 两个为前两行大小100px */
+}
+```
+
+### 元素显示
+
+visibility: hidden 隐藏元素, 但保持占位符;
+display: none 隐藏元素;
+overflow: visible/hidden/scroll/auto 如何显示溢出的元素
+
+### 动画
+
+keyframes 用于定义动画的关键帧
+
+```css
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Call the animation */
+.container {
+  animation: fadeIn;
+  animation-duration: 5s;
+  animation-delay: 2s;
+}
+```
+
+### [CSS Combinators](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Child_combinator)
+
+一共有四种组合方式:
+
+- 后代选择器(space), 匹配所有子、子子等元素
+- 子组合器(>), 匹配直接的子元素
+- 接续兄弟组合器(+), 匹配紧跟在第二个元素后的第一个元素
+- 后续兄弟选择器(~), 匹配跟在第二个元素后面的所有第一个元素
