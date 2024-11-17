@@ -92,6 +92,41 @@ React 中经常需要共享 state 来切换页面的内容, 比如在子组件�
 此时需要将 state 转移到它们共同的 parent 组件中, parent 组件将 state 本身和 setState 函数作为 props
 传递到子组件中, 实现共享. (同级间直接传递是不行的)
 
+但是有时在组件变得庞大之后, 逐级传递 props 来传递 state 会变得很低效, 此时需要 context(类似全局变量)来管理这些 state.
+
+#### 状态机 State Machines
+
+包含初始状态和新状态, 利用 transition func(react 中为`dispatch` 来改变状态. React 中使用`Reducer`实现. Reducer 允许观察到过去的状态, 便于 debug 和 logging.
+
+Reducers 的定义如下:
+
+```jsx
+const [items, dispatch] = useReducer((state, action) => {
+  switch (action.type) {
+  case 'add':
+    return [
+      ...state,
+      {
+        id: state.length,
+        name: action.name,
+      },
+    ]
+  case 'remove':
+    return state.filter((_, index) = index != action.index)
+  default:
+    return state
+  }
+})，[]）
+
+// call dispatch to adjust state
+dispatch({
+  type: "add",
+  name: inputRef.current.value,
+})
+input.current.value = ""
+// item now have a new {}
+```
+
 ### 生命周期
 
 组件的生命周期和餐馆一样, 包含:
@@ -156,3 +191,9 @@ return data.map((item) => {
   return <ItemComponent key={item.id}>item.text</ItemComponent>
 })
 ```
+
+### Context
+
+Context 是 React 提供的一种跨组件数据共享机制，可以用于避免逐级传递 props. 使用 context 配合 reducer 可以进行简单的状态管理(比如一些 task list 和 detail view). 利用一个中心化的文件来导出 dispatch 就可以实现.
+
+更复杂的状态管理(比如大型购物平台的购物车)可以使用`Redux`
