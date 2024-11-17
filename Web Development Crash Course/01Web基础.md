@@ -130,6 +130,33 @@ useEffect(() => {
 
 实现跳转功能时, 使用`<Link to="..."></Link>`, 会被渲染为 html 的链接跳转形式.
 
+### Next.js
+
+Next.js 是一种全栈语言, 对比先前使用的 React+Express.js 的区别有:
+
+- 自带 routing 方法(类似 svelte)
+- 渲染方式为 Multi-page application(MPA), 而 React 为单页应用
+- 对网页的图片和 script 等有优化
+- 自带 middleware
+
+其中渲染方面, Next.js 引入服务器侧渲染(SSR), 而 React+Express 为客户端侧渲染(CSR).
+
+- 使用 CSR 时, 客户端下载 HTML 和 Javascript 并完成渲染, 期间客户端会向服务器和数据库请求数据来填充网页.
+- 使用 SSR 时, 只有渲染好的 HTML 会直接发送给客户端, 服务器完成数据的提取和处理.
+
+SSR 的优点包括, 更接近数据, 提升了可持续性和可读性, 同时性能更有保证, 并且能够避免对客户端的信任.
+
+Next.js 中整合了 SSR 和 CSR(React Server Components, RSC), 将代码分割为服务器部分和客户端部分, 两者同时进行渲染, 从而实现资源的充分利用.
+
+使用`npx create-next-app@latest`来快速创建 Next.js 环境. 具体文件结构如下:
+
+- node_modules
+- public -> public assets, like images/PDFs/...
+- src -> our code
+- next.config.js -> config for next
+
+See example [here](https://github.com/weblab-workshops/bank-statement-viewer) 和 React 几乎一样.
+
 ## HTML
 
 = Hypertext Markup Language, 用于描述网页的**内容和结构**
